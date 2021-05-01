@@ -6,29 +6,23 @@ import os
 app = Flask(__name__)
 
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/")
 def home():
+    return render_template("home.html")
+
+
+@app.route("/result", methods=["POST", "GET"])
+def result():
     if request.method == "POST":
         prediction = predict(**request.form)
         if prediction == 0:
-            return redirect("nostroke")
+            return render_template('nostroke.html')
         elif prediction == 1:
-            return redirect("stroke")
+            return render_template('stroke.html')
         else:
-            return render_template("home.html")
+            return redirect("/")
     if request.method == "GET":
-        return render_template("home.html")
-
-
-@app.route("/nostroke")
-def result():
-    return render_template('nostroke.html')
-
-
-@app.route("/stroke")
-def results():
-    return render_template('stroke.html')
-
+        return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
