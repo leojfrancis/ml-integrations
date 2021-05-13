@@ -4,6 +4,7 @@ import os
 
 
 app = Flask(__name__)
+app.config['DEBUG'] = True
 
 
 @app.route("/")
@@ -16,7 +17,8 @@ def process_dataset():
     if request.method == "POST":
         uploaded_file = request.files['file']
         if uploaded_file.filename != '':
-            uploaded_file.save(os.path.join("data_files",uploaded_file.filename))
+            uploaded_file.save(os.path.join(
+                "data_files", uploaded_file.filename))
     return render_template("")
 
 
